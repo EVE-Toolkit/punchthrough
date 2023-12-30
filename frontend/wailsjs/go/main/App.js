@@ -10,6 +10,10 @@ export function ConnectSystem(arg1, arg2) {
   return window['go']['main']['App']['ConnectSystem'](arg1, arg2);
 }
 
+export function CreateComment(arg1, arg2) {
+  return window['go']['main']['App']['CreateComment'](arg1, arg2);
+}
+
 export function CreateSigs(arg1, arg2) {
   return window['go']['main']['App']['CreateSigs'](arg1, arg2);
 }

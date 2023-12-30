@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 	"strings"
@@ -78,6 +79,22 @@ func (a *App) ConnectSystem(newSystem string, oldSystem string) {
 
 func (a *App) AddSystem(system System) {
 	a.Chain.Systems = append(a.Chain.Systems, system)
+}
+
+func (a *App) CreateComment(systemName, text string) {
+	fmt.Println(text)
+
+	systemIndex := 0
+
+	for i, system := range a.Chain.Systems {
+		if system.Name == systemName {
+			systemIndex = i
+		}
+	}
+
+	a.Chain.Systems[systemIndex].Comments = append(a.Chain.Systems[systemIndex].Comments, text)
+
+	fmt.Println(a.Chain.Systems[systemIndex].Comments)
 }
 
 func (a *App) CreateSigs(text string, systemName string) {

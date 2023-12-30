@@ -4,6 +4,7 @@
     GetActiveChain,
     AddSystem,
     ConnectSystem,
+    CreateComment,
   } from "../wailsjs/go/main/App";
   import { main } from "../wailsjs/go/models";
 
@@ -49,7 +50,21 @@
     revertViewingState();
   }
 
-  function createComment() {}
+  async function createComment() {
+    const text = document.getElementById("comments");
+
+    await CreateComment(systemName, text.value);
+
+    const chain = await GetActiveChain();
+
+    comments = chain.systems.find(
+      (system) => system.name === systemName
+    ).comments;
+
+    console.log(comments);
+
+    revertViewingState();
+  }
 
   async function createSystem() {
     try {
@@ -232,17 +247,49 @@
 
   {#if !viewingSigs && viewingComments}
     {#if comments !== null}
-      <ul>
-        {#each comments as { comment }, i}
-          <li>
-            {comment}
-          </li>
-        {/each}
-      </ul>
+      <div class="flex my-2">
+        <div class="m-auto">
+          <ul>
+            {#each comments as comment, i}
+              <li>
+                - {comment}
+              </li>
+            {/each}
+          </ul>
+        </div>
+      </div>
     {:else}
-      <p>There are no comments at this time.</p>
+      <p class="my-2">There are no comments at this time.</p>
     {/if}
 
-    <button on:click={revertViewingState} class="btn btn-primary">Back</button>
+    <div class="flex mb-5">
+      <div class="m-auto">
+        <button on:click={revertViewingState} class="btn btn-primary"
+          >Back</button
+        >
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="m-auto">
+        <h1 class="text-center font-bold mb-1">Create Comments</h1>
+
+        <textarea
+          class="textarea textarea-primary"
+          id="comments"
+          placeholder="Write Comments"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="m-auto mb-3">
+        <button
+          on:click={createComment}
+          class="btn btn-primary"
+          id="submitSystem">Create New Comment</button
+        >
+      </div>
+    </div>
   {/if}
 </main>

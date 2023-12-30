@@ -6,6 +6,8 @@ export function AddSystem(arg1:main.System):Promise<void>;
 
 export function ConnectSystem(arg1:string,arg2:string):Promise<void>;
 
+export function CreateComment(arg1:string,arg2:string):Promise<void>;
+
 export function CreateSigs(arg1:string,arg2:string):Promise<void>;
 
 export function GetActiveChain():Promise<main.Chain>;
