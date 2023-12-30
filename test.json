@@ -1,1 +1,0 @@
-{"systems":[{"name":"test","comments":null,"sigs":null,"connects_to":["test 2","test 3","test 4"],"connected_to":""},{"name":"test 2","comments":null,"sigs":null,"connects_to":null,"connected_to":"test"},{"name":"test 3","comments":null,"sigs":null,"connects_to":null,"connected_to":"test"},{"name":"test 4","comments":null,"sigs":null,"connects_to":null,"connected_to":"test"}]}
