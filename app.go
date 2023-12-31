@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"os"
 	"strings"
@@ -41,6 +40,18 @@ func NewApp() *App {
 
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+}
+
+func (a *App) getSystemIndex(systemName string) int {
+	systemIndex := 0
+
+	for i, system := range a.Chain.Systems {
+		if system.Name == systemName {
+			systemIndex = i
+		}
+	}
+
+	return systemIndex
 }
 
 func (a *App) GetActiveChain() Chain {
@@ -82,29 +93,49 @@ func (a *App) AddSystem(system System) {
 }
 
 func (a *App) CreateComment(systemName, text string) {
-	fmt.Println(text)
-
-	systemIndex := 0
-
-	for i, system := range a.Chain.Systems {
-		if system.Name == systemName {
-			systemIndex = i
-		}
-	}
+	systemIndex := a.getSystemIndex(systemName)
 
 	a.Chain.Systems[systemIndex].Comments = append(a.Chain.Systems[systemIndex].Comments, text)
+}
 
-	fmt.Println(a.Chain.Systems[systemIndex].Comments)
+func (a *App) DeleteComment(systemName string, index int) []string {
+	systemIndex := a.getSystemIndex(systemName)
+	comments := a.Chain.Systems[systemIndex].Comments
+
+	if len(comments) < 2 {
+		comments = []string{}
+	} else {
+		comments = append(
+			comments[:index],
+			comments[index+1:]...,
+		)
+	}
+
+	a.Chain.Systems[systemIndex].Comments = comments
+
+	return comments
+}
+
+func (a *App) DeleteSig(systemName string, index int) []Sig {
+	systemIndex := a.getSystemIndex(systemName)
+	sigs := a.Chain.Systems[systemIndex].Sigs
+
+	if len(sigs) < 2 {
+		sigs = []Sig{}
+	} else {
+		sigs = append(
+			sigs[:index],
+			sigs[index+1:]...,
+		)
+	}
+
+	a.Chain.Systems[systemIndex].Sigs = sigs
+
+	return sigs
 }
 
 func (a *App) CreateSigs(text string, systemName string) {
-	systemIndex := 0
-
-	for i, system := range a.Chain.Systems {
-		if system.Name == systemName {
-			systemIndex = i
-		}
-	}
+	systemIndex := a.getSystemIndex(systemName)
 
 	lines := strings.Split(text, "\n")
 
@@ -202,8 +233,4 @@ func (a *App) ImportChain() (Chain, error) {
 	a.Chain = chain
 
 	return chain, nil
-}
-
-func (a *App) SaveChain() {
-
 }

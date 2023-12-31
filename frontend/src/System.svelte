@@ -5,6 +5,8 @@
     AddSystem,
     ConnectSystem,
     CreateComment,
+    DeleteComment,
+    DeleteSig,
   } from "../wailsjs/go/main/App";
   import { main } from "../wailsjs/go/models";
 
@@ -121,6 +123,26 @@
     }
   }
 
+  async function deleteComment(index) {
+    const c = await DeleteComment(systemName, index);
+
+    comments = c;
+
+    if (!comments.length) {
+      comments = null;
+    }
+  }
+
+  async function deleteSig(index) {
+    const s = await DeleteSig(systemName, index);
+
+    sigs = s;
+
+    if (!sigs.length) {
+      sigs = null;
+    }
+  }
+
   function drawLine(element1Id, element2Id) {
     new LeaderLine(
       document.getElementById(element1Id),
@@ -202,8 +224,9 @@
 
           <ul class="mb-2">
             {#each sigs as { id, name, type }, i}
-              <li>
+              <li id="sig-{i}">
                 {id} - {name}: {type}
+                <span on:click={() => deleteSig(i)}>❌</span>
               </li>
             {/each}
           </ul>
@@ -251,8 +274,8 @@
         <div class="m-auto">
           <ul>
             {#each comments as comment, i}
-              <li>
-                - {comment}
+              <li id="comment-{i}">
+                - {comment} <span on:click={() => deleteComment(i)}>❌</span>
               </li>
             {/each}
           </ul>

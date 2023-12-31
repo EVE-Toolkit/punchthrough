@@ -18,6 +18,14 @@ export function CreateSigs(arg1, arg2) {
   return window['go']['main']['App']['CreateSigs'](arg1, arg2);
 }
 
+export function DeleteComment(arg1, arg2) {
+  return window['go']['main']['App']['DeleteComment'](arg1, arg2);
+}
+
+export function DeleteSig(arg1, arg2) {
+  return window['go']['main']['App']['DeleteSig'](arg1, arg2);
+}
+
 export function GetActiveChain() {
   return window['go']['main']['App']['GetActiveChain']();
 }
@@ -28,8 +36,4 @@ export function ImportChain() {
 
 export function NewChain(arg1) {
   return window['go']['main']['App']['NewChain'](arg1);
-}
-
-export function SaveChain() {
-  return window['go']['main']['App']['SaveChain']();
 }

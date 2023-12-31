@@ -53,7 +53,7 @@ func main() {
 			return
 		}
 
-		err = os.WriteFile("./"+app.Chain.Systems[0].Name+".json", stringified, os.ModePerm)
+		err = os.WriteFile(fileName, stringified, os.ModePerm)
 
 		if err != nil {
 			runtime.LogError(app.ctx, err.Error())

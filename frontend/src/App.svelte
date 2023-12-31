@@ -2,7 +2,6 @@
   import { loop_guard } from "svelte/internal";
   import {
     ImportChain,
-    SaveChain,
     NewChain,
     GetActiveChain,
   } from "../wailsjs/go/main/App";

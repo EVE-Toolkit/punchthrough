@@ -10,10 +10,12 @@ export function CreateComment(arg1:string,arg2:string):Promise<void>;
 
 export function CreateSigs(arg1:string,arg2:string):Promise<void>;
 
+export function DeleteComment(arg1:string,arg2:number):Promise<Array<string>>;
+
+export function DeleteSig(arg1:string,arg2:number):Promise<Array<main.Sig>>;
+
 export function GetActiveChain():Promise<main.Chain>;
 
 export function ImportChain():Promise<main.Chain>;
 
 export function NewChain(arg1:main.System):Promise<main.Chain>;
-
-export function SaveChain():Promise<void>;
